@@ -1,118 +1,164 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type Emotion = {
-  emoji: string
   nom: string
+  emoji: string
   message: string
 }
 
-const emotions: Emotion[] = [
-  {
-    emoji: '😔',
-    nom: 'Triste',
-    message:
-      'Vous avez le droit d’être triste. Prenez votre temps, vous n’avez pas à tout régler aujourd’hui.',
-  },
-  {
-    emoji: '😰',
-    nom: 'Anxieux',
-    message:
-      'Respirez doucement. Vous êtes ici, maintenant. Une chose à la fois.',
-  },
-  {
-    emoji: '😞',
-    nom: 'Seul',
-    message:
-      'Vous n’avez pas à traverser ce moment seul. Votre présence compte.',
-  },
-  {
-    emoji: '😡',
-    nom: 'Frustré',
-    message:
-      'Votre frustration est réelle. Prenez un moment pour souffler avant de continuer.',
-  },
-  {
-    emoji: '😴',
-    nom: 'Épuisé',
-    message:
-      'Vous avez le droit de ralentir. Se reposer fait aussi partie du chemin.',
-  },
-  {
-    emoji: '😶',
-    nom: 'Vide',
-    message:
-      'Même si vous ne savez pas exactement ce que vous ressentez, vous pouvez rester ici un moment.',
-  },
-  {
-    emoji: '🙂',
-    nom: 'Ça va',
-    message:
-      'Merci de prendre un moment pour vous écouter. Continuez à prendre soin de vous.',
-  },
-  {
-    emoji: '😊',
-    nom: 'Bien',
-    message:
-      'Profitez de ce moment. Les journées plus légères méritent aussi d’être appréciées.',
-  },
-]
-
 function Accueil() {
-  const [emotionChoisie, setEmotionChoisie] = useState<Emotion | null>(null)
+  const [emotionSelectionnee, setEmotionSelectionnee] =
+    useState<Emotion | null>(null)
+
+  const [tempsRestant, setTempsRestant] = useState(60)
+  const [respirationActive, setRespirationActive] = useState(false)
+
+  const emotions: Emotion[] = [
+    {
+      nom: 'Triste',
+      emoji: '😔',
+      message:
+        'Vous avez le droit d’avoir une journée difficile. Prenez votre temps.',
+    },
+    {
+      nom: 'Anxieux',
+      emoji: '😰',
+      message:
+        'Respirez doucement. Vous êtes ici, maintenant. Une chose à la fois.',
+    },
+    {
+      nom: 'Seul',
+      emoji: '😞',
+      message:
+        'Même si vous vous sentez seul, vous n’avez pas à tout porter seul.',
+    },
+    {
+      nom: 'Frustré',
+      emoji: '😡',
+      message:
+        'Prenez un moment pour souffler. Vous n’avez pas besoin de tout régler maintenant.',
+    },
+    {
+      nom: 'Épuisé',
+      emoji: '😴',
+      message:
+        'Vous avez le droit de ralentir. Se reposer fait aussi partie du chemin.',
+    },
+    {
+      nom: 'Vide',
+      emoji: '😶',
+      message:
+        'Vous n’avez pas besoin de comprendre exactement ce que vous ressentez maintenant.',
+    },
+    {
+      nom: 'Ça va',
+      emoji: '🙂',
+      message:
+        'Merci d’avoir pris un moment pour vérifier comment vous vous sentez.',
+    },
+    {
+      nom: 'Bien',
+      emoji: '😊',
+      message:
+        'Profitez de ce moment. Les bonnes journées méritent aussi d’être reconnues.',
+    },
+  ]
+
+  useEffect(() => {
+    if (!respirationActive || tempsRestant <= 0) {
+      return
+    }
+
+    const timer = setTimeout(() => {
+      setTempsRestant((temps) => temps - 1)
+    }, 1000)
+
+    return () => clearTimeout(timer)
+  }, [respirationActive, tempsRestant])
+
+  function commencerRespiration() {
+    setTempsRestant(60)
+    setRespirationActive(true)
+  }
+
+  function obtenirEtapeRespiration() {
+    const secondesEcoulees = 60 - tempsRestant
+    const positionCycle = secondesEcoulees % 12
+
+    if (positionCycle < 4) {
+      return '🌬️ Inspirez'
+    }
+
+    if (positionCycle < 6) {
+      return '⏸️ Retenez'
+    }
+
+    return '🍃 Expirez'
+  }
 
   return (
     <main className="accueil">
-      <div className="conteneur">
-        <header className="header">
-          <div>
-            <h2 className="logo">MindHarbor</h2>
-            <p className="welcome">
-              Un espace pour respirer, parler et avancer.
-            </p>
+      <section className="hero-section">
+        <p className="bienvenue">Bienvenue dans votre espace.</p>
+
+        <h1>Comment vous sentez-vous aujourd’hui ?</h1>
+
+        <p className="sous-titre">
+          Prenez votre temps. Il n’y a pas de mauvaise réponse.
+        </p>
+      </section>
+
+      <section className="emotions-section">
+        <div className="emotions-grid">
+          {emotions.map((emotion) => (
+            <button
+              key={emotion.nom}
+              className={`emotion-card ${
+                emotionSelectionnee?.nom === emotion.nom ? 'active' : ''
+              }`}
+              onClick={() => {
+                setEmotionSelectionnee(emotion)
+                setRespirationActive(false)
+                setTempsRestant(60)
+              }}
+            >
+              <span className="emotion-emoji">{emotion.emoji}</span>
+
+              <span className="emotion-nom">
+                {emotion.nom}
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {emotionSelectionnee && (
+        <section className="message-emotion">
+          <div className="message-emoji">
+            {emotionSelectionnee.emoji}
           </div>
-        </header>
 
-        <section className="intro">
-          <p className="petit-titre">Bienvenue dans votre espace.</p>
+          <div className="message-contenu">
+            <h2>
+              Vous vous sentez{' '}
+              {emotionSelectionnee.nom.toLowerCase()}.
+            </h2>
 
-          <h1>Comment vous sentez-vous aujourd’hui ?</h1>
+            <p>{emotionSelectionnee.message}</p>
 
-          <p className="description">
-            Prenez votre temps. Il n’y a pas de mauvaise réponse.
-          </p>
-        </section>
-
-        <section className="emotions">
-          <div className="grille-emotions">
-            {emotions.map((emotion) => (
-              <button
-                key={emotion.nom}
-                className={`carte-emotion ${
-                  emotionChoisie?.nom === emotion.nom ? 'selectionnee' : ''
-                }`}
-                onClick={() => setEmotionChoisie(emotion)}
-              >
-                <span className="emoji">{emotion.emoji}</span>
-                <span className="nom-emotion">{emotion.nom}</span>
-              </button>
-            ))}
+            <button
+              className="bouton-action"
+              onClick={commencerRespiration}
+            >
+              {!respirationActive
+                ? '🌿 Respirer pendant 60 secondes'
+                : tempsRestant > 0
+                  ? `${obtenirEtapeRespiration()} — ${tempsRestant}s`
+                  : '✨ Exercice terminé'}
+            </button>
           </div>
         </section>
-
-        {emotionChoisie && (
-          <section className="message-emotion">
-            <span className="message-emoji">{emotionChoisie.emoji}</span>
-
-            <div>
-              <p className="message-label">
-                Vous vous sentez {emotionChoisie.nom.toLowerCase()}.
-              </p>
-
-              <p className="message-texte">{emotionChoisie.message}</p>
-            </div>
-          </section>
-        )}
-      </div>
+      )}
     </main>
   )
 }

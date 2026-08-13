@@ -20,7 +20,7 @@ button {
 
 .accueil {
   min-height: 100vh;
-  padding: 50px 24px 80px;
+  padding: 70px 24px 80px;
   background:
     radial-gradient(
       circle at top left,
@@ -30,59 +30,38 @@ button {
     #f8faf9;
 }
 
-.conteneur {
-  width: 100%;
-  max-width: 1050px;
-  margin: 0 auto;
-}
-
-
-/* HEADER */
-
-.header {
-  margin-bottom: 65px;
-}
-
-.logo {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: 750;
-  color: #23443a;
-  letter-spacing: -0.5px;
-}
-
-.welcome {
-  margin: 7px 0 0;
-  color: #7a8e87;
-  font-size: 1rem;
-}
-
 
 /* INTRODUCTION */
 
-.intro {
-  margin-bottom: 42px;
+.hero-section {
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto 42px;
 }
 
-.petit-titre {
-  margin: 0 0 14px;
+.bienvenue {
+  margin: 0 0 18px;
   color: #668078;
   font-size: 1rem;
   font-weight: 600;
 }
 
-.intro h1 {
-  max-width: 760px;
+.hero-section h1 {
+  max-width: 850px;
   margin: 0;
+
   font-size: clamp(2.4rem, 5vw, 4.3rem);
   line-height: 1.05;
   letter-spacing: -2.5px;
+
   color: #203b33;
 }
 
-.description {
+.sous-titre {
   margin: 24px 0 0;
+
   color: #70847d;
+
   font-size: 1.15rem;
   line-height: 1.6;
 }
@@ -90,17 +69,19 @@ button {
 
 /* ÉMOTIONS */
 
-.emotions {
-  margin-top: 35px;
+.emotions-section {
+  width: 100%;
+  max-width: 1050px;
+  margin: 35px auto 0;
 }
 
-.grille-emotions {
+.emotions-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 18px;
 }
 
-.carte-emotion {
+.emotion-card {
   min-height: 145px;
   padding: 24px 15px;
 
@@ -119,8 +100,7 @@ button {
 
   cursor: pointer;
 
-  box-shadow:
-    0 8px 25px rgba(43, 74, 64, 0.05);
+  box-shadow: 0 8px 25px rgba(43, 74, 64, 0.05);
 
   transition:
     transform 0.2s ease,
@@ -129,28 +109,26 @@ button {
     background 0.2s ease;
 }
 
-.carte-emotion:hover {
+.emotion-card:hover {
   transform: translateY(-5px);
 
   border-color: #a8cbbd;
 
-  box-shadow:
-    0 14px 35px rgba(43, 74, 64, 0.12);
+  box-shadow: 0 14px 35px rgba(43, 74, 64, 0.12);
 }
 
-.carte-emotion.selectionnee {
+.emotion-card.active {
   background: #e4f1ec;
   border-color: #75ad99;
 
-  box-shadow:
-    0 12px 30px rgba(65, 118, 98, 0.14);
+  box-shadow: 0 12px 30px rgba(65, 118, 98, 0.14);
 }
 
-.emoji {
+.emotion-emoji {
   font-size: 2.4rem;
 }
 
-.nom-emotion {
+.emotion-nom {
   font-size: 1.05rem;
   font-weight: 700;
 }
@@ -159,7 +137,10 @@ button {
 /* MESSAGE APRÈS LE CLIC */
 
 .message-emotion {
-  margin-top: 35px;
+  width: 100%;
+  max-width: 1050px;
+
+  margin: 35px auto 0;
   padding: 28px 32px;
 
   display: flex;
@@ -176,18 +157,23 @@ button {
 
 .message-emoji {
   font-size: 2rem;
+  padding-top: 3px;
 }
 
-.message-label {
+.message-contenu {
+  flex: 1;
+}
+
+.message-contenu h2 {
   margin: 0 0 8px;
 
   color: #29473e;
 
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
 }
 
-.message-texte {
+.message-contenu p {
   margin: 0;
 
   max-width: 700px;
@@ -196,6 +182,40 @@ button {
 
   line-height: 1.6;
   font-size: 1rem;
+}
+
+
+/* BOUTON RESPIRATION */
+
+.bouton-action {
+  margin-top: 18px;
+  padding: 13px 20px;
+
+  border: 1px solid #d4e3dd;
+  border-radius: 12px;
+
+  background: #ffffff;
+  color: #29473e;
+
+  font-size: 0.95rem;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 14px rgba(43, 74, 64, 0.08);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.bouton-action:hover {
+  transform: translateY(-2px);
+
+  border-color: #9fc7b8;
+
+  box-shadow: 0 7px 18px rgba(43, 74, 64, 0.14);
 }
 
 
@@ -217,15 +237,11 @@ button {
 /* TABLETTE */
 
 @media (max-width: 800px) {
-  .grille-emotions {
+  .emotions-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .header {
-    margin-bottom: 45px;
-  }
-
-  .intro h1 {
+  .hero-section h1 {
     letter-spacing: -1.5px;
   }
 }
@@ -235,19 +251,19 @@ button {
 
 @media (max-width: 500px) {
   .accueil {
-    padding: 30px 18px 60px;
+    padding: 40px 18px 60px;
   }
 
-  .grille-emotions {
+  .emotions-grid {
     gap: 12px;
   }
 
-  .carte-emotion {
+  .emotion-card {
     min-height: 125px;
     border-radius: 19px;
   }
 
-  .emoji {
+  .emotion-emoji {
     font-size: 2rem;
   }
 
