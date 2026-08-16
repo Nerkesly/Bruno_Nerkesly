@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import EmergencyButton from '../components/EmergencyButton'
 
 type Emotion = {
   nom: string
@@ -11,7 +13,8 @@ function Accueil() {
     useState<Emotion | null>(null)
 
   const [tempsRestant, setTempsRestant] = useState(60)
-  const [respirationActive, setRespirationActive] = useState(false)
+  const [respirationActive, setRespirationActive] =
+    useState(false)
 
   const emotions: Emotion[] = [
     {
@@ -81,27 +84,70 @@ function Accueil() {
     setRespirationActive(true)
   }
 
-  function obtenirEtapeRespiration() {
-    const secondesEcoulees = 60 - tempsRestant
-    const positionCycle = secondesEcoulees % 12
-
-    if (positionCycle < 4) {
-      return '🌬️ Inspirez'
-    }
-
-    if (positionCycle < 6) {
-      return '⏸️ Retenez'
-    }
-
-    return '🍃 Expirez'
-  }
-
   return (
     <main className="accueil">
       <section className="hero-section">
-        <p className="bienvenue">Bienvenue dans votre espace.</p>
+        <nav
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '70px',
+          }}
+        >
+          <Link
+            to="/"
+            style={{
+              color: '#203b33',
+              fontSize: '1.4rem',
+              fontWeight: 800,
+              textDecoration: 'none',
+            }}
+          >
+            MindHarbor
+          </Link>
 
-        <h1>Comment vous sentez-vous aujourd’hui ?</h1>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '25px',
+            }}
+          >
+            <Link
+              to="/connexion"
+              style={{
+                color: '#61766f',
+                fontWeight: 650,
+                textDecoration: 'none',
+              }}
+            >
+              Se connecter
+            </Link>
+
+            <Link
+              to="/inscription"
+              style={{
+                padding: '12px 18px',
+                borderRadius: '12px',
+                background: '#315e50',
+                color: '#ffffff',
+                fontWeight: 700,
+                textDecoration: 'none',
+              }}
+            >
+              Créer un compte
+            </Link>
+          </div>
+        </nav>
+
+        <p className="bienvenue">
+          Bienvenue dans votre espace.
+        </p>
+
+        <h1>
+          Comment vous sentez-vous aujourd’hui ?
+        </h1>
 
         <p className="sous-titre">
           Prenez votre temps. Il n’y a pas de mauvaise réponse.
@@ -113,8 +159,11 @@ function Accueil() {
           {emotions.map((emotion) => (
             <button
               key={emotion.nom}
+              type="button"
               className={`emotion-card ${
-                emotionSelectionnee?.nom === emotion.nom ? 'active' : ''
+                emotionSelectionnee?.nom === emotion.nom
+                  ? 'active'
+                  : ''
               }`}
               onClick={() => {
                 setEmotionSelectionnee(emotion)
@@ -122,7 +171,9 @@ function Accueil() {
                 setTempsRestant(60)
               }}
             >
-              <span className="emotion-emoji">{emotion.emoji}</span>
+              <span className="emotion-emoji">
+                {emotion.emoji}
+              </span>
 
               <span className="emotion-nom">
                 {emotion.nom}
@@ -144,21 +195,26 @@ function Accueil() {
               {emotionSelectionnee.nom.toLowerCase()}.
             </h2>
 
-            <p>{emotionSelectionnee.message}</p>
+            <p>
+              {emotionSelectionnee.message}
+            </p>
 
             <button
+              type="button"
               className="bouton-action"
               onClick={commencerRespiration}
             >
-              {!respirationActive
-                ? '🌿 Respirer pendant 60 secondes'
-                : tempsRestant > 0
-                  ? `${obtenirEtapeRespiration()} — ${tempsRestant}s`
-                  : '✨ Exercice terminé'}
+              {respirationActive
+                ? tempsRestant > 0
+                  ? `🌿 Respirez... ${tempsRestant}s`
+                  : '✨ Terminé'
+                : '🌿 Respirer pendant 60 secondes'}
             </button>
           </div>
         </section>
       )}
+
+      <EmergencyButton />
     </main>
   )
 }
