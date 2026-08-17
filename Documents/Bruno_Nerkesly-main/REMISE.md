@@ -15,7 +15,7 @@
 | # | Prénom | Nom | Courriel | Compte GitHub |
 |---|---|---|---|---|
 | 1 | Bruno | Abé Tchombé | [abetchombe41-gif] 
-| 2 | Nerkesly | Duvers | [Courriel Coéquipier] 
+| 2 | Nerkesly | Duvers | [Nerkersly] 
 
 **Capitaine :** Bruno
 
