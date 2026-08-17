@@ -14,8 +14,8 @@
 
 | # | Prénom | Nom | Courriel | Compte GitHub |
 |---|---|---|---|---|
-| 1 | Bruno | Abé Tchombé | [abetchombe41-gif] 
-| 2 | Nerkesly | Duvers | [Nerkersly] 
+| 1 | Bruno | Abé Tchombé | abetchombe41@gmail.com [abetchombe41-gif] 
+| 2 | Nerkesly | Duvers | nerkesly_duvers@hotmail.com | [Nerkersly] 
 
 **Capitaine :** Bruno
 
